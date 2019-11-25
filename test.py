@@ -39,6 +39,16 @@ def test():
     print('confidence scores:')
     print(loaded_model.decision_function(X_test_fc6))
 
+    # Precision and Recall for motobike - 0
+    tp, fp, fn = 0, 0, 0
+    for p, a in zip(y_test, y_pred):
+        tp += ((a == 0) and (p == 0))
+        fn += ((a == 0) and (p == 1))
+        fp += ((a == 1) and (p == 0))
+    precision = tp / max(1, (tp + fp))
+    recall = tp / max(1, (tp + fn))
+    f1_score = (2 * precision * recall) / (precision + recall)
+    print("Precision: {0:.3}\nRecall: {1:.3}\nF1-score: {2:.3}".format(precision, recall, f1_score))
 
 if __name__ == '__main__':
     test()
